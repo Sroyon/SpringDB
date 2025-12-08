@@ -7,14 +7,16 @@ import com.sroyon.dbtest.service.AttendanceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/")
 public class AttendanceController {
 
     @Autowired
     AttendanceService attendanceService;
+    @Autowired
+    AttendanceService attendanceRecordService;
 
     @GetMapping("/attendance")
     public List<Attendance> getAttendance() {
@@ -25,6 +27,8 @@ public class AttendanceController {
     @GetMapping("/attendance/mark/{id}")
     public Attendance markPresent(@PathVariable int id){
         return attendanceService.markPresent(id);
+
     }
+
 
 }
