@@ -23,7 +23,7 @@ public class AttendanceService {
 
     public Attendance markPresent(int personId)
     {
-        Person person = personRepo.findById(personId).get();
+        Person person = personRepo.findById(personId).orElseThrow(()->new RuntimeException("Person not found"));
 
         Attendance attendance = new Attendance(true, person);
 

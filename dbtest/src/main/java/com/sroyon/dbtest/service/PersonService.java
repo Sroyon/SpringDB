@@ -1,5 +1,6 @@
 package com.sroyon.dbtest.service;
 
+import com.sroyon.dbtest.PersonNotFoundException;
 import com.sroyon.dbtest.model.Person;
 import com.sroyon.dbtest.repo.PersonRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,8 @@ public  class PersonService {
     }
 
     public Person getPersonById(int id){
-        return repo.findById(id).get();
+        return repo.findById(id).orElseThrow(()-> new PersonNotFoundException("Person not found with id "+id));
+
     }
 
     public void addPerson(Person person){
@@ -25,6 +27,9 @@ public  class PersonService {
     }
 
     public void deletePersonById(int id){
+        if(!repo.existsById(id)){
+            throw new PersonNotFoundException("Person does not exist with id "+id);
+        }
         repo.deleteById(id);
     }
 }
